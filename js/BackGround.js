@@ -3,13 +3,18 @@ class Background{
     this.x = 0;
     this.y = 0;
     this.width = width;
-    this.height = height;
-    this.image = new Image();
-    this.image.src = "./images/backGroundB.png";
+    this.height = height; 
     this.ctx = ctx;
   }
-  draw(){
-      this.ctx.fillRect(this.x,this.y,this.width,this.height);      
-      this.ctx.drawImage(this.image,this.x,this.y);
-    }  
+  draw(){        
+    // this.x --;
+    // if(this.x < -this.width) this.x = 0;    
+    var img = new Image(); 
+    img.onload = () => {
+      this.ctx.drawImage(img,this.x,this.y,this.width,this.height);
+      //this.ctx.drawImage(img,this.x+this.width,this.y,this.width,this.height);
+    }    
+    img.src = "./images/backGroundC.png";
+
+  }  
 } 

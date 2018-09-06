@@ -7,7 +7,7 @@ var xA = 0;
 var yA = 200;
 var xB = canvas.width;
 var yB = 200;
-var fondo = new Background(canvas.width,canvas.height,ctx);
+var fondo = new Element(0,0,canvas.width,canvas.height,ctx,"./images/backGroundC.png","a");
 
 function start(){
   interval = setInterval(update,1000/40);
@@ -25,19 +25,11 @@ function generateDucks(){
   if(!(frames % 150 === 0 || frames === 1)) return;
   if(ducks.length >= 10) return;
 
-  let imgA = new Image(); 
-  imgA.onload = () => {
-    var duckTeam1 = new Element(xA,yA,70,50,ctx,imgA,'a');
-    ducks.push(duckTeam1);
-  }    
-  imgA.src = "./images/duckA_1.png";
+  var duckTeam1 = new Element(xA,yA,70,50,ctx,"./images/duckA_1.png","a");
+  ducks.push(duckTeam1);
 
-  let imgB = new Image(); 
-  imgB.onload = () => {
-    var duckTeam2 = new Element(xB-70,yB,70,50,ctx,imgB,'b');
-    ducks.push(duckTeam2);
-  }    
-  imgB.src = "./images/duckB_5.png";    
+  var duckTeam2 = new Element(xB-70,yB,70,50,ctx,"./images/duckB_5.png","b");
+  ducks.push(duckTeam2);  
 }
 
 function drawDucks(){
@@ -50,25 +42,15 @@ function drawDucks(){
       duck.x += duck.vx;      
       if (duck.x + duck.vx > canvas.width - duck.width || duck.x + duck.vx < 0) {
         duck.vx *= -1;
-        let imgNewA = new Image(); 
-        imgNewA.src = "./images/duckA_5.png";
-        if(duck.image.src !== imgNewA.src)  duck.image = imgNewA;
-        else{
-          imgNewA.src = "./images/duckA_1.png";
-          duck.image = imgNewA;
-        } 
+        if(duck.image.src !== "./images/duckA_5.png")  duck.image.src = "./images/duckA_5.png";
+        else duck.image.src = "./images/duckA_1.png";
       }  
     }else{
       duck.x -= duck.vx;            
       if (duck.x - duck.vx > canvas.width - duck.width || duck.x - duck.vx < 0) {
         duck.vx *= -1;
-        let imgNewA = new Image(); 
-        imgNewA.src = "./images/duckB_1.png";
-        if(duck.image.src !== imgNewA.src)  duck.image = imgNewA;
-        else{
-          imgNewA.src = "./images/duckB_5.png";
-          duck.image = imgNewA;
-        } 
+        if(duck.image.src !== "./images/duckB_1.png")  duck.image.src = "./images/duckB_1.png";
+        else duck.image.src = "./images/duckB_5.png";        
       }  
     }      
     duck.draw();          

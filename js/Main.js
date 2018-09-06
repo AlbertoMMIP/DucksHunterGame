@@ -41,8 +41,7 @@ function generateDucks(){
 }
 
 function drawDucks(){
-  ducks.forEach((duck, index)=>{       
-    duck.draw();  
+  ducks.forEach((duck, index)=>{     
     duck.y += duck.vy;
     if (duck.y + duck.vy > canvas.height-300 || duck.y + duck.vy < 0) {
       duck.vy *= -1;
@@ -51,13 +50,28 @@ function drawDucks(){
       duck.x += duck.vx;      
       if (duck.x + duck.vx > canvas.width - duck.width || duck.x + duck.vx < 0) {
         duck.vx *= -1;
+        let imgNewA = new Image(); 
+        imgNewA.src = "./images/duckA_5.png";
+        if(duck.image.src !== imgNewA.src)  duck.image = imgNewA;
+        else{
+          imgNewA.src = "./images/duckA_1.png";
+          duck.image = imgNewA;
+        } 
       }  
     }else{
       duck.x -= duck.vx;            
       if (duck.x - duck.vx > canvas.width - duck.width || duck.x - duck.vx < 0) {
         duck.vx *= -1;
+        let imgNewA = new Image(); 
+        imgNewA.src = "./images/duckB_1.png";
+        if(duck.image.src !== imgNewA.src)  duck.image = imgNewA;
+        else{
+          imgNewA.src = "./images/duckB_5.png";
+          duck.image = imgNewA;
+        } 
       }  
-    }        
+    }      
+    duck.draw();          
   });
 }
 

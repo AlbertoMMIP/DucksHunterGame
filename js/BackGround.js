@@ -5,16 +5,11 @@ class Background{
     this.width = width;
     this.height = height; 
     this.ctx = ctx;
+    this.img = new Image();
+    this.img.src = "./images/backGroundC.png";
   }
   draw(){        
-    // this.x --;
-    // if(this.x < -this.width) this.x = 0;    
-    var img = new Image(); 
-    img.onload = () => {
-      this.ctx.drawImage(img,this.x,this.y,this.width,this.height);
-      //this.ctx.drawImage(img,this.x+this.width,this.y,this.width,this.height);
-    }    
-    img.src = "./images/backGroundC.png";
-
+    this.ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
   }  
 } 
+

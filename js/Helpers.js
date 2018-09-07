@@ -12,25 +12,34 @@ function generateDucks(){
 function drawDucks(){
   ducks.forEach((duck)=>{     
     duck.y += duck.vy;
-    if (duck.y + duck.vy > canvas.height-300 || duck.y + duck.vy < 0) {
+    if ((duck.y + duck.vy > canvas.height-300 || duck.y + duck.vy < 0) && duck.live === 1) {
       duck.vy *= -1;
     } 
-    if(duck.team === 'a'){
+    if(duck.team === 'a' && duck.live === 1){
       duck.x += duck.vx;      
       if (duck.x + duck.vx > canvas.width - duck.width || duck.x + duck.vx < 0) {
         duck.vx *= -1;
         if(duck.image.src !== "./images/duckA_5.png")  duck.image.src = "./images/duckA_5.png";
         else duck.image.src = "./images/duckA_1.png";
       }  
-    }else{
+      if(duckDiedB.collision(duck)){
+        duck.live = 0;
+        duck.image = duckDiedB.image;
+      } 
+    }else if(duck.team === 'b' && duck.live === 1){
       duck.x -= duck.vx;            
       if (duck.x - duck.vx > canvas.width - duck.width || duck.x - duck.vx < 0) {
         duck.vx *= -1;
         if(duck.image.src !== "./images/duckB_1.png")  duck.image.src = "./images/duckB_1.png";
         else duck.image.src = "./images/duckB_5.png";        
       }  
+      if(duckDiedA.collision(duck)) {
+        duck.live = 0;
+        duck.image = duckDiedA.image;
+      } 
     }      
-    duck.draw();          
+    duck.draw();    
+
   });
 }
 addEventListener("keydown",function(e){
@@ -68,6 +77,11 @@ addEventListener("keydown",function(e){
     case 83:
       if(playerA.y + playerA.height >= canvas.height) playerA.y = canvas.height - playerA.height;
       else playerA.y += 50;
+      break;
+    case 81:
+      duckDiedA.x = playerA.x;
+      duckDiedA.y = playerA.y;      
+      duckDiedA.draw();
       break;
     default:
       break;

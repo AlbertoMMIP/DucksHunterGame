@@ -10,6 +10,6 @@ class Element{
   }
   draw(){        
     this.ctx.drawImage(this.image,this.x,this.y,this.width,this.height);    
-  }  
+  }    
   
 }

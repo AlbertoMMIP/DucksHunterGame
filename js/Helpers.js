@@ -1,51 +1,91 @@
+function start(){
+  interval = setInterval(update,1000/40);
+}
+
+function update(){  
+  frames ++;
+  ctx.clearRect(0,0,canvas.width,canvas.height);  
+  fondo.draw();
+  playerA.draw();
+  playerB.draw();
+  generateDucks();
+  drawDucks();  
+  drawtimer();
+}
+
 function generateDucks(){
   if(!(frames % 150 === 0 || frames === 1)) return;
-  if(ducks.length >= 10) return;
-
-  var duckTeam1 = new Ducks(xA,y,70,50,ctx,"./images/duckA_1.png","a");
+  
+  var y = Math.floor(Math.random() * 400);
+  var duckTeam1 = new Ducks(0,y,70,50,ctx,"./images/duckA_1.png","a");
   ducks.push(duckTeam1);
 
-  var duckTeam2 = new Ducks(xB-70,y,70,50,ctx,"./images/duckB_5.png","b");
+  var duckTeam2 = new Ducks(canvas.width-70,y,70,50,ctx,"./images/duckB_5.png","b");
   ducks.push(duckTeam2);  
 }
 
 function drawDucks(){
-  ducks.forEach((duck)=>{     
+
+  ducks.forEach((duck)=>{              
     duck.y += duck.vy;
     if ((duck.y + duck.vy > canvas.height-300 || duck.y + duck.vy < 0) && duck.live === 1) {
       duck.vy *= -1;
-    } 
+    }
     if(duck.team === 'a' && duck.live === 1){
       duck.x += duck.vx;      
       if (duck.x + duck.vx > canvas.width - duck.width || duck.x + duck.vx < 0) {
         duck.vx *= -1;
-        if(duck.image.src !== "./images/duckA_5.png")  duck.image.src = "./images/duckA_5.png";
-        else duck.image.src = "./images/duckA_1.png";
-      }  
-      if(duckDiedB.collision(duck)){
+        let srcImgA = duck.image.src.toString().split("/");
+        if(srcImgA[srcImgA.length - 1]=== "duckA_5.png"){
+          duck.image.src = "./images/duckA_1.png";
+        } 
+        else if (srcImgA[srcImgA.length - 1] === "duckA_1.png") {
+          duck.image.src = "./images/duckA_5.png";
+        }
+      }            
+      if(gunB.shoot === 1 && gunB.moment+1 === frames && gunB.collision(duck)){
         duck.live = 0;
-        duck.image = duckDiedB.image;
+        duck.image.src = "./images/duckA_8.png";
       } 
     }else if(duck.team === 'b' && duck.live === 1){
       duck.x -= duck.vx;            
       if (duck.x - duck.vx > canvas.width - duck.width || duck.x - duck.vx < 0) {
         duck.vx *= -1;
-        if(duck.image.src !== "./images/duckB_1.png")  duck.image.src = "./images/duckB_1.png";
+        let srcImgB = duck.image.src.toString().split("/");
+        if(srcImgB[srcImgB.length - 1] !== "duckB_1.png")  duck.image.src = "./images/duckB_1.png";
         else duck.image.src = "./images/duckB_5.png";        
       }  
-      if(duckDiedA.collision(duck)) {
+      if(gunA.shoot === 1 && gunA.moment+1 === frames && gunA.collision(duck)){
         duck.live = 0;
-        duck.image = duckDiedA.image;
-      } 
-    }      
-    duck.draw();    
+        duck.image.src = "./images/duckB_8.png";
+      }   
+
+    }else if(duck.team === 'a' && duck.live === 0){ 
+      duck.image.src = "./images/duckA_9.png";
+      duck.vy = Math.abs(duck.vy);
+    }else if(duck.team === 'b' && duck.live === 0){ 
+      duck.image.src = "./images/duckB_9.png";
+      duck.vy = Math.abs(duck.vy);
+    }         
+  duck.draw();    
 
   });
 }
+
+function drawtimer(){
+  ctx.font = "50px Avenir";
+  timeRest = Math.floor(time - (frames/40));
+  ctx.fillText(timeRest, 600,50);
+  if(timeRest === 0) clearInterval(interval);
+}
+
 addEventListener("keydown",function(e){
   var tecla = e.keyCode;
   console.log(tecla);
   switch(tecla){
+    case 32:
+      clearInterval(interval);
+      break;      
     case 37:
       if(playerB.x - playerB.width < 0) playerB.x = playerB.width;
       else playerB.x -= 50;
@@ -78,10 +118,19 @@ addEventListener("keydown",function(e){
       if(playerA.y + playerA.height >= canvas.height) playerA.y = canvas.height - playerA.height;
       else playerA.y += 50;
       break;
-    case 81:
-      duckDiedA.x = playerA.x;
-      duckDiedA.y = playerA.y;      
-      duckDiedA.draw();
+    case 81:      
+      gunA.shoot = 1;
+      gunA.moment = frames;
+      gunA.x = playerA.x;
+      gunA.y = playerA.y;
+      console.log("Dispara");
+      break;
+    case 80:      
+      gunB.shoot = 1;
+      gunB.moment = frames;
+      gunB.x = playerB.x;
+      gunB.y = playerB.y;
+      console.log("Dispara p");
       break;
     default:
       break;

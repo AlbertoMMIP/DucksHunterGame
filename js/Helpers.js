@@ -10,7 +10,8 @@ function update(){
   playerB.draw();
   generateDucks();
   drawDucks();  
-  drawtimer();
+  drawTimer();
+  drawScore();
 }
 
 function generateDucks(){
@@ -72,13 +73,35 @@ function drawDucks(){
   });
 }
 
-function drawtimer(){
+function drawTimer(){
   ctx.font = "50px Avenir";
   timeRest = Math.floor(time - (frames/40));
   ctx.fillText(timeRest, 600,50);
   if(timeRest === 0) clearInterval(interval);
 }
+function drawScore(){
+  ctx.font = "30px Avenir";
+  scoreA =ducks.reduce(function(accumulator, current){
+    if(current.team === 'a' && current.live === 0){    
+      return accumulator + 1;
+    }else{
+      return accumulator;
+    }
+  },0);
+  scoreB = ducks.reduce(function(accumulator, current){
+    if(current.team === 'b' && current.live === 0){    
+      return accumulator + 1;
+    }else{
+      return accumulator;
+    }
+  },0);
 
+  ctx.fillText(scoreA, 100,50);
+  duckScoreA.draw();
+  ctx.fillText(scoreB, 1100,50);
+  duckScoreB.draw();
+  
+}
 addEventListener("keydown",function(e){
   var tecla = e.keyCode;
   console.log(tecla);

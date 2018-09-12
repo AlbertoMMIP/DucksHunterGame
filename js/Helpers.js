@@ -82,14 +82,14 @@ function drawTimer(){
 function drawScore(){
   ctx.font = "30px Avenir";
   scoreA =ducks.reduce(function(accumulator, current){
-    if(current.team === 'a' && current.live === 0){    
+    if(current.team === 'b' && current.live === 0){    
       return accumulator + 1;
     }else{
       return accumulator;
     }
   },0);
   scoreB = ducks.reduce(function(accumulator, current){
-    if(current.team === 'b' && current.live === 0){    
+    if(current.team === 'a' && current.live === 0){    
       return accumulator + 1;
     }else{
       return accumulator;

@@ -37,13 +37,28 @@ function drawDucks(){
       if (duck.x + duck.vx > canvas.width - duck.width || duck.x + duck.vx < 0) {
         duck.vx *= -1;
         let srcImgA = duck.image.src.toString().split("/");
-        if(srcImgA[srcImgA.length - 1]=== "duckA_5.png"){
+        if(srcImgA[srcImgA.length - 1] === "duckA_5.png" || srcImgA[srcImgA.length - 1] === "duckA_4.png"){
           duck.image.src = "./images/duckA_1.png";
         } 
-        else if (srcImgA[srcImgA.length - 1] === "duckA_1.png") {
+        else if (srcImgA[srcImgA.length - 1] === "duckA_1.png" || srcImgA[srcImgA.length - 1] === "duckA_0.png") {
           duck.image.src = "./images/duckA_5.png";
         }
-      }            
+      } 
+
+      let srcImgA2 = duck.image.src.toString().split("/");
+      if(srcImgA2[srcImgA2.length - 1] === "duckA_5.png"){
+        duck.image.src = "./images/duckA_4.png";
+      } 
+      else if (srcImgA2[srcImgA2.length - 1] === "duckA_4.png") {
+        duck.image.src = "./images/duckA_5.png";
+      }  
+      else if (srcImgA2[srcImgA2.length - 1] === "duckA_1.png") {
+        duck.image.src = "./images/duckA_0.png";
+      }  
+      else if (srcImgA2[srcImgA2.length - 1] === "duckA_0.png") {
+        duck.image.src = "./images/duckA_1.png";
+      }      
+
       if(gunB.shoot === 1 && gunB.moment+1 === frames && gunB.collision(duck)){
         duck.live = 0;
         duck.image.src = "./images/duckA_8.png";
@@ -56,6 +71,21 @@ function drawDucks(){
         if(srcImgB[srcImgB.length - 1] !== "duckB_1.png")  duck.image.src = "./images/duckB_1.png";
         else duck.image.src = "./images/duckB_5.png";        
       }  
+
+      let srcImgB2 = duck.image.src.toString().split("/");
+      if(srcImgB2[srcImgB2.length - 1] === "duckB_5.png"){
+        duck.image.src = "./images/duckB_4.png";
+      } 
+      else if (srcImgB2[srcImgB2.length - 1] === "duckB_4.png") {
+        duck.image.src = "./images/duckB_5.png";
+      }  
+      else if (srcImgB2[srcImgB2.length - 1] === "duckB_1.png") {
+        duck.image.src = "./images/duckB_0.png";
+      }  
+      else if (srcImgB2[srcImgB2.length - 1] === "duckB_0.png") {
+        duck.image.src = "./images/duckB_1.png";
+      }      
+
       if(gunA.shoot === 1 && gunA.moment+1 === frames && gunA.collision(duck)){
         duck.live = 0;
         duck.image.src = "./images/duckB_8.png";
@@ -79,6 +109,7 @@ function drawTimer(){
   ctx.fillText(timeRest, 600,50);
   if(timeRest === 0) clearInterval(interval);
 }
+
 function drawScore(){
   ctx.font = "30px Avenir";
   scoreA =ducks.reduce(function(accumulator, current){
@@ -102,6 +133,7 @@ function drawScore(){
   duckScoreB.draw();
   
 }
+
 addEventListener("keydown",function(e){
   var tecla = e.keyCode;
   console.log(tecla);

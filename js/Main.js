@@ -11,5 +11,14 @@ var gunA = new Weapon(playerA.x,playerA.y,50,30,ctx,"./images/duckB_8.png");
 var gunB = new Weapon(playerB.x,playerB.y,50,30,ctx,"./images/duckA_8.png");
 var duckScoreA = new Ducks(40,25,50,30,ctx,"./images/duckA_0.png","a");
 var duckScoreB = new Ducks(canvas.width-80,25,50,30,ctx,"./images/duckB_4.png","b");
-start();
 
+document.addEventListener('DOMContentLoaded', function() {
+	var elems = document.querySelectorAll('.sidenav');
+	var instances = M.Sidenav.init(elems);
+});
+
+var btnStart = document.getElementById("btnPlay");
+btnStart.addEventListener("click",function(){
+  document.getElementById("board").style.visibility = "visible"; 
+  start();
+}); 

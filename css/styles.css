@@ -4,10 +4,17 @@
   box-sizing: border-box;
 }
 body{
-  background: lightblue;
+  background: white;
 }
-.board{
+#Instructions{
+  position: relative;
+}
+#Play{
   display: flex;
   justify-content: center;
   align-content: center;
+}
+
+#board{
+  visibility: hidden;
 }

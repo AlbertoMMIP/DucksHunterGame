@@ -141,19 +141,19 @@ addEventListener("keydown",function(e){
     case 32:
       clearInterval(interval);
       break;      
-    case 37:
+    case 74:
       if(playerB.x - playerB.width < 0) playerB.x = playerB.width;
       else playerB.x -= 50;
       break;
-    case 39:
+    case 76:
       if(playerB.x + playerB.width >= canvas.width) playerB.x = canvas.width - playerB.width;
       else playerB.x += 50;
       break;
-    case 38:
+    case 73:
       if(playerB.y - playerB.height < 0) playerB.y = playerB.height;
       else playerB.y -= 50;
       break;
-    case 40:
+    case 75:
       if(playerB.y + playerB.height >= canvas.height) playerB.y = canvas.height - playerB.height;
       else playerB.y += 50;
       break;

@@ -27,7 +27,24 @@ function generateDucks(){
 
 function drawDucks(){
 
-  ducks.forEach((duck)=>{              
+  ducks.forEach((duck)=>{   
+    if(timeRest >= 40){
+      if (duck.vy < 0)  duck.vy = -1;
+      else duck.vy = 1;
+      if(duck.vx < 0) duck.vx = -3;
+      else duck.vx = 3;
+    }else if(timeRest >= 20 && timeRest < 40){
+      if (duck.vy < 0)  duck.vy = -3;
+      else duck.vy = 3;
+      if(duck.vx < 0) duck.vx = -5;
+      else duck.vx = 5;
+    }else if(timeRest > 0 && timeRest < 20){
+      if (duck.vy < 0)  duck.vy = -5;
+      else duck.vy = 5;
+      if(duck.vx < 0) duck.vx = -8;
+      else duck.vx = 8;
+    }
+
     duck.y += duck.vy;
     if ((duck.y + duck.vy > canvas.height-300 || duck.y + duck.vy < 0) && duck.live === 1) {
       duck.vy *= -1;

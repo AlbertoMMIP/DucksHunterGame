@@ -178,6 +178,7 @@ addEventListener("keydown",function(e){
       gunA.moment = frames;
       gunA.x = playerA.x;
       gunA.y = playerA.y;
+      sonido.play();
       console.log("Dispara");
       break;
     case 80:      
@@ -186,6 +187,7 @@ addEventListener("keydown",function(e){
       gunB.x = playerB.x;
       gunB.y = playerB.y;
       console.log("Dispara p");
+      sonido.play();
       break;
     default:
       break;

@@ -46,12 +46,12 @@ function drawDucks(){
     }
 
     duck.y += duck.vy;
-    if ((duck.y + duck.vy > canvas.height-300 || duck.y + duck.vy < 0) && duck.live === 1) {
+    if ((duck.y + duck.vy >= canvas.height-300 || duck.y + duck.vy <= 0) && duck.live === 1) {
       duck.vy *= -1;
     }
     if(duck.team === 'a' && duck.live === 1){
       duck.x += duck.vx;      
-      if (duck.x + duck.vx > canvas.width - duck.width || duck.x + duck.vx < 0) {
+      if (duck.x + duck.vx >= canvas.width - duck.width || duck.x + duck.vx < 0) {
         duck.vx *= -1;
         let srcImgA = duck.image.src.toString().split("/");
         if(srcImgA[srcImgA.length - 1] === "duckA_5.png" || srcImgA[srcImgA.length - 1] === "duckA_4.png"){
@@ -82,11 +82,15 @@ function drawDucks(){
       } 
     }else if(duck.team === 'b' && duck.live === 1){
       duck.x -= duck.vx;            
-      if (duck.x - duck.vx > canvas.width - duck.width || duck.x - duck.vx < 0) {
+      if (duck.x - duck.vx >= canvas.width - duck.width || duck.x - duck.vx < 0) {
         duck.vx *= -1;
         let srcImgB = duck.image.src.toString().split("/");
-        if(srcImgB[srcImgB.length - 1] !== "duckB_1.png")  duck.image.src = "./images/duckB_1.png";
-        else duck.image.src = "./images/duckB_5.png";        
+        if(srcImgB[srcImgB.length - 1] === "duckB_5.png" || srcImgB[srcImgB.length - 1] === "duckB_4.png"){
+          duck.image.src = "./images/duckB_1.png";
+        } 
+        else if (srcImgB[srcImgB.length - 1] === "duckB_1.png" || srcImgB[srcImgB.length - 1] === "duckB_0.png") {
+          duck.image.src = "./images/duckB_5.png";
+        }    
       }  
 
       let srcImgB2 = duck.image.src.toString().split("/");

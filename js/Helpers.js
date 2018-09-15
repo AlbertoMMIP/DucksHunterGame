@@ -1,5 +1,6 @@
 function start(){
   interval = setInterval(update,1000/40);
+  
 }
 
 function update(){  
@@ -12,6 +13,7 @@ function update(){
   drawDucks();  
   drawTimer();
   drawScore();
+  sonidoStart.play();
 }
 
 function generateDucks(){
@@ -128,7 +130,7 @@ function drawTimer(){
   ctx.font = "50px Avenir";
   timeRest = Math.floor(time - (frames/40));
   ctx.fillText(timeRest, 600,50);
-  if(timeRest === 0) clearInterval(interval);
+  if(timeRest === 0) gameOver();
 }
 
 function drawScore(){
@@ -149,10 +151,32 @@ function drawScore(){
   },0);
 
   ctx.fillText(scoreA, 100,50);
+  ctx.fillText("A", 15,50);
   duckScoreA.draw();
-  ctx.fillText(scoreB, 1100,50);
+  ctx.fillText(scoreB, 1090,50);
+  ctx.fillText("B", 1170,50);
   duckScoreB.draw();
   
+}
+
+function gameOver(){
+  ctx.font = "60px Avenir";  
+  clearInterval(interval);
+  ctx.clearRect(0,0,canvas.width,canvas.height); 
+  fondo.draw();
+  var win = "Player";
+  if(scoreA > scoreB){
+    win += " A - W O N";
+    duckWinA.draw();
+  }else if(scoreB > scoreA){
+    win += " B - W O N";
+    duckWinB.draw();
+  }else{
+    win = "Both - W O N ";
+    duckWinA.draw();
+    duckWinB.draw();
+  }
+  ctx.fillText(win, 400,300);
 }
 
 addEventListener("keydown",function(e){
